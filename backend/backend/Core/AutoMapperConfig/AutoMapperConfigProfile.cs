@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using backend.Core.Dtos.Candidate;
 using backend.Core.Dtos.Company;
 using backend.Core.Dtos.Job;
 using backend.Core.Entites;
@@ -20,7 +21,9 @@ namespace backend.Core.AutoMapperConfig
 
 
             //Candidate
-
+            CreateMap<CandidateCreateDto, Candidate>();
+            CreateMap<Candidate, CandidateGetDto>()
+                .ForMember(dest => dest.JobTitle, opt => opt.MapFrom(src => src.Job.Title));
         }
     }
 }
