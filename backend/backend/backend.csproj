@@ -19,8 +19,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Core\Dtos\" />
-    <Folder Include="Core\AutoMapperConfig\" />
+    <Folder Include="Core\Dtos\Candidate\" />
+    <Folder Include="Core\Dtos\Job\" />
   </ItemGroup>
 
 </Project>
