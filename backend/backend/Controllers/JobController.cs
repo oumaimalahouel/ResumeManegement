@@ -33,7 +33,7 @@ namespace backend.Controllers
             await _context.jobs.AddAsync(newJob);
             await _context.SaveChangesAsync();
 
-            return Ok("Job Created Successfully");
+            return Ok(new { id = newJob.ID, message = "Job Saved Successfully" });
         }
 
         // Read
@@ -45,6 +45,47 @@ namespace backend.Controllers
             var convertdJobs = _mapper.Map<IEnumerable<JobGetDto>>(jobs);
 
             return Ok(convertdJobs);
+        }
+        // Update
+        [HttpPut]
+        [Route("Update/{id}")]
+        public async Task<IActionResult> UpdateJob(long id, JobUpdateDto dto)
+        {
+            var jobToUpdate = await _context.jobs.FindAsync(id);
+
+            if (jobToUpdate == null)
+            {
+                return NotFound();
+            }
+
+            // Update job properties with new values
+            jobToUpdate.Title = dto.Title;
+            jobToUpdate.Level = dto.Level;
+          
+
+            // Save changes to database
+            await _context.SaveChangesAsync();
+
+            return Ok(new { id = jobToUpdate.ID, Message = "Job updated successfully" });
+        }
+
+        // Delete
+        [HttpDelete]
+        [Route("Delete/{id}")]
+        public async Task<IActionResult> DeleteJob(long id)
+        {
+            var jobToDelete = await _context.jobs.FindAsync(id);
+
+            if (jobToDelete == null)
+            {
+                return NotFound();
+            }
+
+            _context.jobs.Remove(jobToDelete);
+
+            await _context.SaveChangesAsync();
+
+            return Ok(new { id = jobToDelete.ID, Message = "Job updated successfully" });
         }
 
     }

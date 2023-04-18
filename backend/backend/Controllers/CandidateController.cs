@@ -50,7 +50,7 @@ namespace backend.Controllers
             await _context.candidates.AddAsync(newCandidate);
             await _context.SaveChangesAsync();
 
-            return Ok("Candidate Saved Successfully");
+            return Ok(new { id = newCandidate.ID, message = "Candidate Saved Successfully" });
         }
         // Read
         [HttpGet]
@@ -78,6 +78,64 @@ namespace backend.Controllers
             var pdfBytes = System.IO.File.ReadAllBytes(filePath);
             var file = File(pdfBytes, "application/pdf", url);
             return file;
+        }
+
+        // Update
+        [HttpPut]
+        [Route("update/{id}")]
+        public async Task<IActionResult> UpdateCandidate(long id, [FromBody] CandidateUpdateDto dto)
+        {
+            var candidate = await _context.candidates.FindAsync(id);
+
+            if (candidate == null)
+            {
+                return NotFound("Candidate not found");
+            }
+
+            // Update candidate properties
+            candidate.FirstName = dto.FirstName;
+            candidate.LastName = dto.LastName;
+            candidate.Email = dto.Email;
+            candidate.Phone = dto.Phone;
+            candidate.CoverLetter = dto.CoverLetter;
+            candidate.JobId = dto.JobId;
+            candidate.ResumeUrl = dto.ResumeUrl;
+
+            _context.candidates.Update(candidate);
+            await _context.SaveChangesAsync();
+
+            return Ok(new { ID = candidate.ID, Message = "Candidate updated successfully" });
+
+        }
+        // Delete
+        [HttpDelete]
+        [Route("Delete/{id}")]
+        public async Task<IActionResult> DeleteCandidate(long id)
+        {
+            var candidate = await _context.candidates.FindAsync(id);
+
+            if (candidate == null)
+            {
+                return NotFound("Candidate not found");
+            }
+
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "documents", "pdfs", candidate.ResumeUrl);
+            if (System.IO.File.Exists(filePath))
+            {
+                System.IO.File.Delete(filePath);
+            }
+
+            try
+            {
+                _context.candidates.Remove(candidate);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                return BadRequest("Cannot delete this candidate because they have related records in the database.");
+            }
+
+            return Ok(new { ID = candidate.ID, Message = "Candidate deleted successfully" });
         }
 
 

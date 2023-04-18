@@ -30,7 +30,7 @@ namespace backend.Controllers
             await _context.companies.AddAsync(newComapany);
             await _context.SaveChangesAsync();
 
-            return Ok("Companty Created Successfully");
+            return Ok(new { id = newComapany.ID, message = "Company Saved Successfully" });
         }
 
 
@@ -46,7 +46,49 @@ namespace backend.Controllers
             return Ok(convertedCompanies);
         }
 
-        //Update
-        //Delete
+        // Update
+        [HttpPut]
+        [Route("Update/{id}")]
+        public async Task<IActionResult> UpdateCompany(int id, [FromBody] CompanyUpdateDto dto)
+        {
+            // Convertir l'id en long
+            long idLong = (long)id;
+
+            // Trouver l'entité Company correspondante
+            Company company = await _context.companies.FindAsync(idLong);
+
+            if (company == null)
+            {
+                return NotFound();
+            }
+
+            // Mettre à jour les propriétés de l'entité avec les valeurs du DTO
+            company.Name = dto.Name;
+            company.Size = dto.Size;
+        
+
+            // Enregistrer les modifications
+            await _context.SaveChangesAsync();
+
+            return Ok(new { ID = company.ID, Message = "Company updated successfully" });
+        }
+
+        // Delete
+        [HttpDelete]
+        [Route("Delete/{id}")]
+        public async Task<IActionResult> DeleteCompany(int id)
+        {
+            var company = await _context.companies.FindAsync((long)id);
+            if (company == null)
+            {
+                return NotFound();
+            }
+
+            _context.companies.Remove(company);
+            await _context.SaveChangesAsync();
+
+            return Ok(new { ID = company.ID, Message = "Company updated successfully" });
+        }
+
     }
 }
