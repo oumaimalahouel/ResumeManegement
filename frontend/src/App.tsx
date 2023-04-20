@@ -1,13 +1,13 @@
 import { useContext, lazy, Suspense } from "react";
-
+import Navbar from "./components/navbar/Navbar.component";
 import { ThemeContext } from "./context/theme.context";
-import  Navbar  from "./components/navbar/Navbar.component";
-import { Route, Routes } from "react-router-dom";
-
+import { Routes, Route } from "react-router-dom";
 import CustomLinearProgress from "./components/custom-linear-progress/custoom-linear_progress";
 
 // Imports with Lazy loading
 const Home = lazy(() => import("./components/pages/home/Home.page"));
+const Companies = lazy(() => import("./components/pages/CompaniesPages/Companies.page"));
+const AddCompany = lazy(() => import("./components/pages/CompaniesPages/AddCompany.page"));
 
 
 const App = () => {
@@ -21,10 +21,10 @@ const App = () => {
          <div className="wrapper">
             <Suspense fallback={<CustomLinearProgress />}>
                <Routes>
-                  <Route path="/" element={<Home/>} />
+                  <Route path="/" element={<Home />} />
                   <Route path="/companies">
-                     <Route index element={""} />
-                     <Route path="add" element={""} />
+                     <Route index element={<Companies />} />
+                     <Route path="add" element={<AddCompany />} />
                   </Route>
                   <Route path="/jobs">
                      <Route index element={""} />
