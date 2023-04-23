@@ -5,6 +5,8 @@ import { Routes, Route } from "react-router-dom";
 import CustomLinearProgress from "./components/custom-linear-progress/custoom-linear_progress";
 import Jobs from "./components/pages/jobs/Jobs.page";
 import AddJob from "./components/pages/jobs/AddJob.page";
+import Candidates from "./components/pages/candidates/Candidates.page";
+import AddCandidate from "./components/pages/candidates/AddCandidate.page";
 
 // Imports with Lazy loading
 const Home = lazy(() => import("./components/pages/home/Home.page"));
@@ -33,8 +35,8 @@ const App = () => {
                      <Route path="add" element={<AddJob/>} />
                   </Route>
                   <Route path="/candidates">
-                     <Route index element={""} />
-                     <Route path="add" element={""} />
+                     <Route index element={<Candidates/>} />
+                     <Route path="add" element={<AddCandidate/>} />
                   </Route>
                </Routes>
             </Suspense>

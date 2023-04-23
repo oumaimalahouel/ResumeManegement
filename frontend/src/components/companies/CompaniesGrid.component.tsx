@@ -16,7 +16,8 @@ const column: GridColDef[] = [
       headerName: "Creation Time",
       width: 200,
       renderCell: (params) => moment(params.row.createdAt).format("YYYY-MM-DD"),
-   },
+      
+   }
 ];
 
 interface ICompaniesGridProps {
