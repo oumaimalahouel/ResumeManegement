@@ -8,6 +8,8 @@ export interface ICompany {
     name: string;
     size: string;
  }
+
+
  export interface IJob {
     id: string;
     title: string;

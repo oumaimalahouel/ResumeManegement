@@ -12,7 +12,7 @@ const Companies = () => {
    const [companies, setCompanies] = useState<ICompany[]>([]);
    const [loading, setLoading] = useState<boolean>(false);
    const redirect = useNavigate();
-   const [showSizeColumn, setShowSizeColumn] = useState<boolean>(true);
+  
 
 
    useEffect(() => {
@@ -45,7 +45,15 @@ const Companies = () => {
          ) : companies.length === 0 ? (
             <h1>No Company</h1>
          ) : (
-            <CompaniesGrid data={companies} />
+            <CompaniesGrid data={companies} 
+            actions={[
+               {
+                 label: "Edit",
+                 onClick: (id: string) => {
+                   redirect(`/companies/update/${id}`);
+                 },
+               },
+             ]}/>
          )}
       </div>
    );

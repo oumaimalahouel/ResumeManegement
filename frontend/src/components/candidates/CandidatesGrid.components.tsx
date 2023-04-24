@@ -26,6 +26,7 @@ const column: GridColDef[] = [
          </a>
       ),
    },
+   
 ];
 
 interface ICandidatesGridProps {
