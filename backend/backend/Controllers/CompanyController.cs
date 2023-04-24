@@ -46,6 +46,25 @@ namespace backend.Controllers
             return Ok(convertedCompanies);
         }
 
+
+
+        // Read by ID
+        [HttpGet("{id}")]
+        public async Task<ActionResult<CompanyGetDto>> GetCompanyById(long id)
+        {
+            var company = await _context.companies.FindAsync(id);
+
+            if (company == null)
+            {
+                return NotFound();
+            }
+
+          
+            var companyDto = _mapper.Map<CompanyGetDto>(company);
+
+            return Ok(companyDto);
+        }
+
         // Update
         [HttpPut]
         [Route("Update/{id}")]
@@ -61,6 +80,12 @@ namespace backend.Controllers
             {
                 return NotFound();
             }
+
+
+
+
+
+
 
             // Mettre à jour les propriétés de l'entité avec les valeurs du DTO
             company.Name = dto.Name;
