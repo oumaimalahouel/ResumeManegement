@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using backend.Core.Context;
 using backend.Core.Dtos.Candidate;
+using backend.Core.Dtos.Job;
 using backend.Core.Entites;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -61,6 +62,21 @@ namespace backend.Controllers
             var convertedCandidates = _mapper.Map<IEnumerable<CandidateGetDto>>(candidates);
 
             return Ok(convertedCandidates);
+        }
+        [HttpGet("{id}")]
+        public async Task<ActionResult<CandidateGetDto>> GetCandidateById(long id)
+        {
+            var candidate = await _context.candidates.FindAsync(id);
+
+            if (candidate == null)
+            {
+                return NotFound();
+            }
+
+
+            var candidateDto = _mapper.Map<CandidateGetDto>(candidate);
+
+            return Ok(candidateDto);
         }
 
         // Read (Download Pdf File)
