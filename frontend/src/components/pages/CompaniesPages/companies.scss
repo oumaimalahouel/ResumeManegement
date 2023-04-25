@@ -6,7 +6,7 @@
       width: 100%;
    }
 }
-.add-company {
+.add-company , .update-company{
    width: 500px;
    max-width: 100%;
    @include d-flex(column, flex-start, center);

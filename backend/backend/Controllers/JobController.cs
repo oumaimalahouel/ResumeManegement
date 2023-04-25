@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using backend.Core.Context;
+using backend.Core.Dtos.Company;
 using backend.Core.Dtos.Job;
 using backend.Core.Entites;
 using Microsoft.AspNetCore.Http;
@@ -45,6 +46,24 @@ namespace backend.Controllers
             var convertdJobs = _mapper.Map<IEnumerable<JobGetDto>>(jobs);
 
             return Ok(convertdJobs);
+        }
+
+
+        // Get by ID
+        [HttpGet("{id}")]
+        public async Task<ActionResult<JobGetDto>> GetJobById(long id)
+        {
+            var job = await _context.jobs.FindAsync(id);
+
+            if (job == null)
+            {
+                return NotFound();
+            }
+
+
+            var jobDto = _mapper.Map<JobGetDto>(job);
+
+            return Ok(jobDto);
         }
         // Update
         [HttpPut]

@@ -48,7 +48,7 @@ namespace backend.Controllers
 
 
 
-        // Read by ID
+        // Get by ID
         [HttpGet("{id}")]
         public async Task<ActionResult<CompanyGetDto>> GetCompanyById(long id)
         {
@@ -64,6 +64,10 @@ namespace backend.Controllers
 
             return Ok(companyDto);
         }
+
+
+
+
 
         // Update
         [HttpPut]
@@ -114,6 +118,7 @@ namespace backend.Controllers
 
             return Ok(new { ID = company.ID, Message = "Company updated successfully" });
         }
+
 
     }
 }

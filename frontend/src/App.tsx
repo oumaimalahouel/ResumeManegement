@@ -8,6 +8,7 @@ import AddJob from "./components/pages/jobs/AddJob.page";
 import Candidates from "./components/pages/candidates/Candidates.page";
 import AddCandidate from "./components/pages/candidates/AddCandidate.page";
 import UpdateCompany from "./components/pages/CompaniesPages/UpdateCompany.page";
+import UpdateJob from "./components/pages/jobs/UpdateJob.page";
 
 // Imports with Lazy loading
 const Home = lazy(() => import("./components/pages/home/Home.page"));
@@ -35,6 +36,7 @@ const App = () => {
                   <Route path="/jobs">
                      <Route index element={<Jobs/>} />
                      <Route path="add" element={<AddJob/>} />
+                     <Route path="update/:jobId" element={<UpdateJob />} />
                   </Route>
                   <Route path="/candidates">
                      <Route index element={<Candidates/>} />
